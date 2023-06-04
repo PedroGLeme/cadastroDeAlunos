@@ -1,0 +1,83 @@
+///faça um programa que leia e armazene em
+///um registro os dados de um aluno com as seguintes informações: Nome do Aluno, Nro. USP, Nota1,
+///Nota2 e Média. Os dados devem ser digitados pelo usuário, armazenados na estrutura de dados em
+///memória e exibidos na tela. A seguir deve ser perguntado ao usuário se ele deseja adicionar estes dados
+///em um arquivo em disco (“cadastro.txt”), onde caso o usuário confirme, todos os dados devem ser
+///adicionados ao fim deste arquivo texto; caso contrário os dados são simplesmente descartados.
+///O programa deve ter um laço de entrada de dados, seguido da pergunta “Adicionar dados no Arquivo
+///(S/N)?”, e seguido da pergunta “Deseja fornecer mais dados (S/N)?”, onde caso o usuário responda que
+///sim, o programa repete a entrada de novos dados, caso responda que não, o programa é encerrado.
+///+++
+///faça um programa que armazene em
+///memória os dados de toda uma turma, composta de até 5 alunos. Os dados devem ser armazenados em
+///um vetor de estruturas compostas (nome, nro, n1, n2 e média). O programa deve ler os dados dos
+///alunos (sem a média), armazenar no vetor, calcular a média simples das notas, e depois exibir na tela
+///todos os dados de cada um dos alunos.
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+typedef struct t_infstd{
+             char nome[50], esc;
+             int nro;
+             float nota1, nota2, media;
+                       }t_std;
+
+int main()
+{
+    FILE *Arq;
+    char nome[50], esc;
+    int nro, d, i;
+    float nota1, nota2, media;
+    t_std std[10];
+
+    printf("quantos alunos vc quer armazenar os dados? \n");
+    scanf("%d", &d );
+    for( i=0; i<d; i++)
+    {
+    printf("de o nome do aluno \n");
+    fflush(stdin);
+    fgets(nome, 50, stdin);
+
+    printf("de o numero usp \n");
+    scanf("%d", &nro);
+
+    printf("de as notas 1 e 2 \n");
+    scanf("%f %f", &nota1, &nota2);
+
+    media= (nota1 + nota2)/2;
+
+    strcpy(std[i].nome, nome);
+    std[i].nro= nro;
+    std[i].nota1 = nota1;
+    std[i].nota2= nota2;
+    std[i].media= media;
+    }
+
+    printf("deseja armazenar tais informacoes em um arquivo texto? (S/N) \n");
+
+    scanf("%s", &esc);
+
+    if( esc=='S')
+    {
+        Arq = fopen("arq.txt", "wt");
+        if( Arq == NULL)
+        {
+            printf("ERRO na abertura de arquivo\n");
+            exit(1);
+        }
+        for(i=0 ; i<d; i++)
+        {
+        fprintf(Arq, "%s \n", std[i].nome);
+        fprintf(Arq, "%d \n", std[i].nro);
+        fprintf(Arq, "%d \n", std[i].nro);
+        fprintf(Arq, "%f \n", std[i].media);
+        }
+        fclose(Arq);
+    }
+
+
+
+    return 0;
+}
